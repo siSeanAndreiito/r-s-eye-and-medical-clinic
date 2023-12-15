@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal R-S Eye and Medical Clinic</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #eeeeee;
+        }
+
+        header {
+            border-bottom: 1px solid black;
+            padding-left: 35px;
+            padding-right: 35px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        header img {
+            width: 150px;
+            height: auto;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        nav {
+            margin-left: auto;
+        }
+
+        nav a {
+            color: black;
+            text-decoration: none;
+            margin-left: 35px;
+            font-size: 25px;
+            font-family: 'Inter', sans-serif;
+            font-style: italic;
+            font-weight: 800;
+            word-wrap: break-word;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20px;
+            right: 20px;
+            height: 1px;
+            background-color: black;
+        }
+
+        .bottom-div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            margin-top: 50px;
+            margin-bottom: 10px;
+        }
+
+        .bottom-div img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+
+        .text-container {
+            margin-left: 20px;
+            text-align: left;
+            margin: 0;
+            font-size: 50px;
+            font-family: 'Inter', sans-serif;
+            font-style: italic;
+            font-weight: 800;
+            color: #00ACA2; /* Added color */
+            word-wrap: break-word;
+        }
+
+        p {
+            margin: 0;
+            font-size: 50px;
+            font-family: 'Inter', sans-serif;
+            font-style: italic;
+            font-weight: 800;
+            color: #00ACA2; /* Added color */
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <img src="./img/top.png" alt="Page Icon">
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="portal.html" id="portalLink">Patients Portal</a>
+            <a href="aboutus.html">About Us</a>
+            <a href="privacypolicy.html">Privacy</a>
+            <a href="#" id="logoutLink" style="display:none;">Log Out</a>
+            <a href="signin.html" id="signInLink">Sign In</a>
+        </nav>
+    </header>
+
+    <div class="bottom-div">
+        <img src="./img/profile.jpg" alt="Bottom Image">
+        <div class="text-container">
+            <div id="welcomeMessage" style="margin-left: 10px;"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const token = localStorage.getItem('token');
+            const username = localStorage.getItem('username');
+    
+            if (token) {
+                // User is logged in
+                document.getElementById('signInLink').style.display = 'none';
+                document.getElementById('logoutLink').style.display = 'inline-block';
+                document.getElementById('portalLink').href = 'portal.html';
+    
+                // Check if the username is not undefined before displaying it
+                if (username) {
+                    document.getElementById('welcomeMessage').innerText = `${username}`;
+                }
+            } else {
+                // User is not logged in
+                document.getElementById('signInLink').style.display = 'inline-block';
+                document.getElementById('logoutLink').style.display = 'none';
+                document.getElementById('portalLink').href = 'signin.html';
+            }
+    
+            // Add an event listener for the logout link
+            document.getElementById('logoutLink').addEventListener('click', function () {
+                localStorage.removeItem('token');
+                localStorage.removeItem('username');
+                document.getElementById('signInLink').style.display = 'inline-block';
+                document.getElementById('logoutLink').style.display = 'none';
+                document.getElementById('portalLink').href = 'signin.html';
+            });
+        });
+    </script>
+</body>
+</html>

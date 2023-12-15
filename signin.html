@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R-S Eye and Medical Clinic Sign In</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('./img/green.png') center/cover no-repeat;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding: 20px;
+        }
+
+        header img {
+            width: 200px;
+            height: auto;
+        }
+
+        .bottom-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            height: 70vh;
+        }
+
+        .left-side {
+            flex: 0.5;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+            color: white;
+            
+            font-style: italic;
+            
+        }
+
+        .left-side h1 {
+            margin-bottom: -50px;
+            font-size: 70px;
+        }
+
+        .right-side {
+            flex: 0.25; /* Adjusted to make it smaller */
+            padding: 20px;
+            padding-top: 35px;
+            padding-bottom: 50px;
+            border-radius: 50px;
+            background: rgba(0, 0, 0, 0.5);
+            text-align: left;
+        }
+
+        .right-side h2 {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .right-side p {
+            color: white;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .learn-more-button {
+            background-color: orange;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .signin-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .signin-form label {
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .signin-form input {
+            padding: 8px;
+            margin-bottom: 15px;
+        }
+
+        .signin-button {
+            background-color: orange;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        body, p, .button {
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <img src="./img/top.png" alt="Site Icon">
+    </header>
+    <div class="bottom-section">
+        <div class="left-side">
+            <h1>Sign In</h1>
+            <p style="margin-top: 50px; margin-bottom: 70px;">Don't have an Account? <a href="signup.html" style="text-decoration: none; color: red;">Sign Up</a></p>
+            <p>An account with us simplifies appointment booking, offers secure appointment management, keeps you updated, and ensures your privacy.</p>
+            <a href="index.html" class="learn-more-button">Learn More</a>
+        </div>
+
+        <div class="right-side">
+            <h2 style="text-align: center; font-size: 35px; font-style: italic;">Sign In</h2>
+            <form class="signin-form" id="signinForm">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            
+                <button type="button" class="signin-button" onclick="signin()">Sign In</button>
+            </form>
+            
+        </div>
+    </div>
+</body>
+<script>
+    async function signin() {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        try {
+            const response = await fetch('http://localhost:5000/auth/signin', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const result = await response.json();
+
+            console.log(result); // Add this line to inspect the result object
+
+            if (result.success) {
+                // Save the token in local storage
+                localStorage.setItem('token', result.token);
+            
+                // Assign the username to a constant
+                const username = result.username;
+            
+                // Check if username is present before saving to local storage
+                if (username) {
+                    localStorage.setItem('username', username);
+                    alert(`Signin successful! Welcome back, ${username}!`);
+                    // Redirect to the homepage
+                    window.location.href = 'index.html'; // Replace 'index.html' with the actual URL for the homepage
+                } else {
+                    console.error('Username is undefined in the server response.');
+                }
+            } else {
+                alert('Signin failed. ' + result.message);
+            }
+
+        } catch (error) {
+            console.error('Error during signin:', error);
+            alert('An error occurred during signin. Please try again.');
+        }
+    }
+</script>
+
+</html>

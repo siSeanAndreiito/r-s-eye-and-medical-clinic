@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About R-S Eye and Medical Clinic</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #eeeeee;
+        }
+
+        header {
+            border-bottom: 1px solid black;
+            padding-left: 35px;
+            padding-right: 35px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        header img {
+            width: 150px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        nav {
+            margin-left: auto;
+        }
+
+        nav a {
+            color: black;
+            text-decoration: none;
+            margin-left: 35px;
+            font-size: 25px;
+            font-family: 'Inter', sans-serif;
+            font-style: italic;
+            font-weight: 800;
+            word-wrap: break-word;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20px;
+            right: 20px;
+            height: 1px;
+            background-color: black;
+        }
+
+        .bottom-div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            margin-left: 100px;
+            margin-right: 100px;
+        }
+
+        .bottom-div img {
+            width: 500px;
+            height: auto;
+            border-radius: 25%;
+            margin-right: 20px;
+        }
+
+        .text-container {
+            margin-left: 20px;
+            text-align: left;
+        }
+
+        p {
+            margin: 0;
+            font-size: 15px; /* Adjusted font size for better readability */
+            font-family: 'Inter', sans-serif;
+            font-style: italic;
+            font-weight: 800;
+            color: #00ACA2;
+            word-wrap: break-word;
+        }
+
+        .button {
+            background-color: #33ccff;
+            color: white;
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            font-style: italic;
+            font-weight: 800;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .about-us {
+            font-size: 35px;
+            font-weight: 800;
+            margin-top: 35px;
+            color: black;
+            text-align: center;
+        }
+
+        .about-text {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: black;
+        }
+
+        .link-text {
+            font-size: 20px;
+            color: black;
+             /* Added text indent for better readability */
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <img src="./img/top.png" alt="Page Icon">
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="portal.html" id="portalLink">Patients Portal</a>
+            <a href="aboutus.html">About Us</a>
+            <a href="privacypolicy.html">Privacy</a>
+            <a href="#" id="logoutLink" style="display:none;">Log Out</a>
+            <a href="signin.html" id="signInLink">Sign In</a>
+        </nav>
+    </header>
+
+    <p class="about-us">About Us</p>
+
+    <div class="bottom-div">
+        <img src="./img/about.jpg" alt="Bottom Image">
+        <div class="text-container">
+            <p class="about-text">
+                Introduction:
+                <p style="text-indent: 20px; color:black">Welcome to R-S Eye and Medical, your trusted partner in healthcare and vision solutions. At R-S Eye and Medical, we are dedicated to delivering top-notch medical care and eye services with a commitment to excellence.</p>
+            </p><br>
+            <p class="about-text">
+                History:
+                <p style="text-indent: 20px; color:black">Our journey began in 2004 when we embarked on a mission to redefine healthcare and vision services. Over the years, we've achieved significant milestones in providing comprehensive medical care and cutting-edge eye solutions.</p>
+            </p><br>
+            <p class="about-text">
+                Mission and Values:
+                <p style="text-indent: 20px; color:black">Our mission is simple yet profound: To enhance the health and well-being of our patients through expert medical care and advanced eye services. We stand by the values of compassion, expertise, and innovation.</p>
+            </p><br>
+            <p class="about-text">
+                Appointments:
+                <p style="text-indent: 20px; color:black">Ready to experience our expert healthcare and vision services? You can schedule an appointment with our specialists online. Visit our <a href="index.html" style="color: #00ACA2; text-decoration: none;">Book Appointment</a> to choose a convenient date and time for your visit.</p>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const token = localStorage.getItem('token');
+    
+            if (token) {
+                // User is logged in
+                document.getElementById('signInLink').style.display = 'none';
+                document.getElementById('logoutLink').style.display = 'inline-block';
+                document.getElementById('portalLink').href = 'portal.html';
+            } else {
+                // User is not logged in
+                document.getElementById('signInLink').style.display = 'inline-block';
+                document.getElementById('logoutLink').style.display = 'none';
+                document.getElementById('portalLink').href = 'signin.html';
+            }
+    
+            // Add an event listener for the logout link
+            document.getElementById('logoutLink').addEventListener('click', function () {
+                localStorage.removeItem('token');
+                document.getElementById('signInLink').style.display = 'inline-block';
+                document.getElementById('logoutLink').style.display = 'none';
+                document.getElementById('portalLink').href = 'signin.html';
+            });
+        });
+    </script>
+</body>
+
+</html>
