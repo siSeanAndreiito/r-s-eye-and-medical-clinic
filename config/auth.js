@@ -42,11 +42,14 @@ router.post('/signin', (req, res, next) => {
                 const user = results[0];
                 const username = user.username;
 
-                // Include the username in the token payload
-                const token = jwt.sign({ email: email, username: username }, 'your_secret_key', { expiresIn: '1h' });
+                // Include the role (assuming it's stored in your database)
+                const role = user.role;
+
+                // Include the username and role in the token payload
+                const token = jwt.sign({ email: email, username: username, role: role }, 'your_secret_key', { expiresIn: '1h' });
 
                 // Send the username along with the token in the response
-                res.status(200).json({ success: true, token: token, username: username });
+                res.status(200).json({ success: true, token: token, username: username, role: role });
             } else {
                 res.status(401).json({ success: false, message: 'Invalid email or password' });
             }
@@ -56,5 +59,6 @@ router.post('/signin', (req, res, next) => {
         return next(error);
     }
 });
+
 
 module.exports = router;

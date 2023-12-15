@@ -8,10 +8,12 @@ app.use(cors());
 app.use(express.json());
 
 const auth = require('./config/auth.js');
+const admin = require('./config/admin.js');
 
 app.get('/', (req, res) => res.send('API Running'));
 
 app.use('/auth', auth);
+app.use('/admin', admin);
 
 const PORT = process.env.PORT || 5000;
 
