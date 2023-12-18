@@ -159,21 +159,17 @@
 
             const result = await response.json();
 
-            console.log(result); // Add this line to inspect the result object
+            console.log(result); 
 
             if (result.success) {
-                // Save the token in local storage
                 localStorage.setItem('token', result.token);
             
-                // Assign the username to a constant
                 const username = result.username;
             
-                // Check if username is present before saving to local storage
                 if (username) {
                     localStorage.setItem('username', username);
-                    alert(`Signin successful! Welcome back, ${username}!`);
-                    // Redirect to the homepage
-                    window.location.href = 'index.html'; // Replace 'index.html' with the actual URL for the homepage
+                    alert(`Sign in successful. Welcome, ${username}!`);
+                    window.location.href = 'index.html';
                 } else {
                     console.error('Username is undefined in the server response.');
                 }

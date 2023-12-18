@@ -26,7 +26,6 @@
             width: 150px;
             height: auto;
             margin-right: 10px;
-            border-radius: 50%;
         }
 
         nav {
@@ -78,7 +77,7 @@
             font-family: 'Inter', sans-serif;
             font-style: italic;
             font-weight: 800;
-            color: #00ACA2; /* Added color */
+            color: #00ACA2; 
             word-wrap: break-word;
         }
 
@@ -88,7 +87,7 @@
             font-family: 'Inter', sans-serif;
             font-style: italic;
             font-weight: 800;
-            color: #00ACA2; /* Added color */
+            color: #00ACA2; 
             word-wrap: break-word;
         }
     </style>
@@ -120,31 +119,30 @@
             const username = localStorage.getItem('username');
     
             if (token) {
-                // User is logged in
                 document.getElementById('signInLink').style.display = 'none';
                 document.getElementById('logoutLink').style.display = 'inline-block';
                 document.getElementById('portalLink').href = 'portal.html';
     
-                // Check if the username is not undefined before displaying it
                 if (username) {
                     document.getElementById('welcomeMessage').innerText = `${username}`;
                 }
             } else {
-                // User is not logged in
                 document.getElementById('signInLink').style.display = 'inline-block';
                 document.getElementById('logoutLink').style.display = 'none';
                 document.getElementById('portalLink').href = 'signin.html';
             }
     
-            // Add an event listener for the logout link
             document.getElementById('logoutLink').addEventListener('click', function () {
                 localStorage.removeItem('token');
                 localStorage.removeItem('username');
                 document.getElementById('signInLink').style.display = 'inline-block';
                 document.getElementById('logoutLink').style.display = 'none';
                 document.getElementById('portalLink').href = 'signin.html';
+    
+                window.location.href = 'index.html';
             });
         });
     </script>
+    
 </body>
 </html>

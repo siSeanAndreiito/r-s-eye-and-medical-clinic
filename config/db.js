@@ -1,11 +1,9 @@
-// db.js
-
 var mysql = require('mysql');
 
 var connection = mysql.createConnection({
-    host: 'localhost',  // Use 'localhost' or '127.0.0.1' for the XAMPP MySQL server
+    host: 'localhost',  
     user: 'root',
-    password: '',  // Provide your MySQL password here
+    password: '', 
     database: 'cpe202_lab7_demo',
 });
 

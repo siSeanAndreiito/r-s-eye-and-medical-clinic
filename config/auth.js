@@ -9,17 +9,16 @@ router.post('/signup', (req, res, next) => {
     const password = req.body.password;
 
     try {
-        // Use parameterized query to prevent SQL injection
         const sqlQuery = "INSERT INTO account_credentials(username, email, password) VALUES (?, ?, ?)";
         dbConn.query(sqlQuery, [username, email, password], function (error, results) {
             console.log(results);
             if (error) {
                 console.log(error);
-                return next(error);
+                return res.status(500).json({ success: false, message: 'Internal server error' });
             }
-        });
 
-        res.status(200).json({ success: true });
+            res.status(200).json({ success: true });
+        });
     } catch (error) {
         console.log(error);
         return res.status(500).json({ success: false, message: 'Internal server error' });
@@ -35,20 +34,16 @@ router.post('/signin', (req, res, next) => {
         dbConn.query(sqlQuery, [email, password], function (error, results) {
             if (error) {
                 console.log(error);
-                return next(error);
+                return res.status(500).json({ success: false, message: 'Internal server error' });
             }
 
             if (results.length > 0) {
                 const user = results[0];
                 const username = user.username;
-
-                // Include the role (assuming it's stored in your database)
                 const role = user.role;
 
-                // Include the username and role in the token payload
-                const token = jwt.sign({ email: email, username: username, role: role }, 'your_secret_key', { expiresIn: '1h' });
+                const token = jwt.sign({ id: user.id, email: email, username: username, role: role }, 'your_secret_key', { expiresIn: '1h' });
 
-                // Send the username along with the token in the response
                 res.status(200).json({ success: true, token: token, username: username, role: role });
             } else {
                 res.status(401).json({ success: false, message: 'Invalid email or password' });
@@ -56,9 +51,8 @@ router.post('/signin', (req, res, next) => {
         });
     } catch (error) {
         console.log(error);
-        return next(error);
+        return res.status(500).json({ success: false, message: 'Internal server error' });
     }
 });
-
 
 module.exports = router;
